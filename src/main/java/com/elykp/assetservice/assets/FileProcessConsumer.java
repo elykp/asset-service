@@ -26,7 +26,9 @@ public class FileProcessConsumer {
 
   @RabbitHandler
   public void receiveMsg(final FileProcessMessage fileProcessMessage) {
+    log.info("Start processing task");
     process(fileProcessMessage);
+    log.info("Finish processing task");
   }
 
   private void process(final FileProcessMessage fileProcessMessage) {
