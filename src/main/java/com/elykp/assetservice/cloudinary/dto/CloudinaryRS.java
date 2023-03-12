@@ -1,6 +1,7 @@
 package com.elykp.assetservice.cloudinary.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -24,4 +25,5 @@ public class CloudinaryRS {
 
   private int width;
 
+  private List<ImageTransformation> eager;
 }

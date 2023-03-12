@@ -1,10 +1,8 @@
 package com.elykp.assetservice.assets;
 
 import com.elykp.assetservice.assets.dto.CloudUploadRQ;
-import com.elykp.assetservice.cloudinary.CloudinaryService;
-import com.elykp.assetservice.cloudinary.dto.CloudinaryRS;
+import com.elykp.assetservice.assets.dto.FileProcessMessage;
 import com.elykp.assetservice.storage.StorageService;
-import java.io.IOException;
 import java.nio.file.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,24 +11,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class AssetServiceImpl implements AssetService {
 
-  private final CloudinaryService cloudinaryService;
+  private final AssetRepository assetRepository;
 
   private final StorageService storageService;
 
-  private final AssetRepository assetRepository;
+  private final FileProcessProducer fileProcessProducer;
+
 
   @Override
-  public Asset uploadToCloud(CloudUploadRQ cloudUploadRQ) throws IOException {
-    Path path = storageService.store(cloudUploadRQ.getFile());
-    CloudinaryRS cloudinaryResponse = cloudinaryService.upload(path.toAbsolutePath().toString());
-    Asset asset = new Asset();
-    asset.setPhotoId(cloudUploadRQ.getPhotoId());
-    asset.setHeight(cloudinaryResponse.getHeight());
-    asset.setWidth(cloudinaryResponse.getWidth());
-    asset.setUrl(cloudinaryResponse.getSecureUrl());
-    asset.setOwnerId(cloudUploadRQ.getOwnerId());
-    asset.setResponsiveKey("Test");
-
-    return assetRepository.save(asset);
+  public void uploadToCloud(CloudUploadRQ cloudUploadRQ) {
+    final Path path = storageService.store(cloudUploadRQ.getFile());
+    FileProcessMessage fileProcessMessage = new FileProcessMessage(
+        path.toAbsolutePath().toString(),
+        cloudUploadRQ.getPhotoId(),
+        cloudUploadRQ.getOwnerId());
+    fileProcessProducer.sendMsg(fileProcessMessage);
   }
+
+  @Override
+  public void deleteByPhotoId(String photoId) {
+    assetRepository.deleteAllByPhotoId(photoId);
+  }
+
 }

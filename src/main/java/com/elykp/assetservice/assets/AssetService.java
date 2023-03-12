@@ -4,5 +4,7 @@ import com.elykp.assetservice.assets.dto.CloudUploadRQ;
 import java.io.IOException;
 
 public interface AssetService {
-  Asset uploadToCloud(CloudUploadRQ cloudUploadRQ) throws IOException;
+  void uploadToCloud(CloudUploadRQ cloudUploadRQ) throws IOException;
+
+  void deleteByPhotoId(String photoId);
 }

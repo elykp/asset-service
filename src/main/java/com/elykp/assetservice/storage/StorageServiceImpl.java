@@ -9,11 +9,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.util.Optional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Log4j2
 public class StorageServiceImpl implements StorageService {
 
   private final Path rootLocation;
@@ -38,7 +40,7 @@ public class StorageServiceImpl implements StorageService {
         throw new StorageException("Failed to store empty file.");
       }
       Path destinationFile = this.rootLocation.resolve(
-              Paths.get(String.format("%o.%s",
+              Paths.get(String.format("%o%s",
                   Instant.now().getEpochSecond(),
                   getExtension(file.getOriginalFilename()).orElse(""))
               ))
@@ -59,6 +61,24 @@ public class StorageServiceImpl implements StorageService {
   }
 
   @Override
+  public void deleteByPath(Path path) {
+    try {
+      FileSystemUtils.deleteRecursively(path);
+    } catch (IOException e) {
+      log.error(e.getMessage());
+    }
+  }
+
+  @Override
+  public void deleteByPath(String path) {
+    try {
+      FileSystemUtils.deleteRecursively(Path.of(path));
+    } catch (IOException e) {
+      log.error(e.getMessage());
+    }
+  }
+
+  @Override
   public void deleteAll() {
     FileSystemUtils.deleteRecursively(rootLocation.toFile());
   }
@@ -66,6 +86,6 @@ public class StorageServiceImpl implements StorageService {
   private Optional<String> getExtension(@Nullable String filename) {
     return Optional.ofNullable(filename)
         .filter(f -> f.contains("."))
-        .map(f -> f.substring(filename.lastIndexOf(".") + 1));
+        .map(f -> f.substring(filename.lastIndexOf(".")));
   }
 }

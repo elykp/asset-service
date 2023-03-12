@@ -33,6 +33,11 @@ spring:
         '[format_sql]': true
         jdbc:
           '[time_zone]': UTC
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
 
 eureka:
   client:
@@ -55,3 +60,6 @@ cloudinary:
 
 storage:
   location: .temp
+
+queue:
+  name: image-process-queue

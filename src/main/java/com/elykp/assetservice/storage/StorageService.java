@@ -9,5 +9,10 @@ public interface StorageService {
 
   Path store(MultipartFile file);
 
+  void deleteByPath(Path path);
+
+  void deleteByPath(String path);
+
+
   void deleteAll();
 }

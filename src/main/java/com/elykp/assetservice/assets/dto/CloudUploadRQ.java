@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @NoArgsConstructor
 public class CloudUploadRQ {
+
   private MultipartFile file;
 
   private String ownerId;
