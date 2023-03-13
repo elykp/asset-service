@@ -1,10 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        image 'maven:3.9.0-eclipse-temurin-17-alpine'
+        args '-v $HOME/.m2:/root/.m2 --network jenkins'
+        reuseNode true
+    }
 
     stages {
         stage('Build') {
             steps {
-                echo 'My first Jenkinsfile'
+                mvn -v
+                java -v
             }
         }
     }
