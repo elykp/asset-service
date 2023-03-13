@@ -8,4 +8,11 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            mail to: 'blackparadise0407@gmail.com',
+            subject: 'Build asset service',
+            body: 'Success'
+        }
+    }
 }
