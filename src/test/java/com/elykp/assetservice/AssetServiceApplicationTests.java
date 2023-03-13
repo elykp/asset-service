@@ -11,7 +11,6 @@ class AssetServiceApplicationTests {
 
   @Test
   void contextLoads(ApplicationContext context) {
-    assert context != null;
     assertThat(context, notNullValue());
   }
 
