@@ -55,8 +55,8 @@ oauth:
   scope: ${SCOPE:SCOPE_asset}
 
 cloudinary:
-  key: ${CLOUDINARY_API_KEY:789143575217113}
-  secret: ${CLOUDINARY_API_SECRET:7dm3F5Xtb2m4ZZofdwjkNHPMRXY}
+  key: ${CLOUDINARY_API_KEY}
+  secret: ${CLOUDINARY_API_SECRET}
   cloudname: ${CLOUDINARY_CLOUD_NAME:dig00csrc}
   upload-preset: ${CLOUDINARY_UPLOAD_PRESET:elykp_dev}
 
