@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @Log4j2
 public class StorageServiceImpl implements StorageService {
+
+  private static final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg",
+      "image/gif", "image/webp");
+
 
   private final Path rootLocation;
 
@@ -38,6 +44,11 @@ public class StorageServiceImpl implements StorageService {
     try {
       if (file.isEmpty()) {
         throw new StorageException("Failed to store empty file.");
+      }
+      if (!contentTypes.contains(file.getContentType())) {
+        throw new StorageException("Unsupported file type! " + "Allowed type are: " +
+            String.join(", ", contentTypes)
+        );
       }
       Path destinationFile = this.rootLocation.resolve(
               Paths.get(String.format("%o%s",

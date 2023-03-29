@@ -27,14 +27,9 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .cors().and()
-        .csrf().disable()
-        .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/error").permitAll()
-            .requestMatchers("/api/**").hasAuthority(scope)
-            .anyRequest().authenticated())
+        .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
-
+    http.csrf().disable();
     return http.build();
   }
 

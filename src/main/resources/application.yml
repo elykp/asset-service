@@ -15,15 +15,15 @@ spring:
           jwk-set-uri: ${OAUTH_JWKS_URI:http://localhost:8080/realms/elykp/protocol/openid-connect/certs}
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/elykp_asset_dev}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:040799}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:040799}
     driver-class-name: org.postgresql.Driver
     hikari:
       schema: dbo
   flyway:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/elykp_asset_dev}
-    user: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:040799}
+    user: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:040799}
     default-schema: dbo
     baseline-on-migrate: false
   jpa:
@@ -52,11 +52,11 @@ web:
     allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
 
 oauth:
-  scope: ${SCOPE:SCOPE_asset}
+  scope: ${SCOPE:SCOPE_asset-service}
 
 cloudinary:
-  key: ${CLOUDINARY_API_KEY}
-  secret: ${CLOUDINARY_API_SECRET}
+  key: ${CLOUDINARY_API_KEY:789143575217113}
+  secret: ${CLOUDINARY_API_SECRET:7dm3F5Xtb2m4ZZofdwjkNHPMRXY}
   cloudname: ${CLOUDINARY_CLOUD_NAME:dig00csrc}
   upload-preset: ${CLOUDINARY_UPLOAD_PRESET:elykp_dev}
 

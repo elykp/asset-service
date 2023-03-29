@@ -1,10 +1,14 @@
 package com.elykp.assetservice.assets;
 
+import com.elykp.assetservice.assets.dto.AssetRS;
 import com.elykp.assetservice.assets.dto.CloudUploadRQ;
-import java.io.IOException;
+import java.util.Map;
 
 public interface AssetService {
-  void uploadToCloud(CloudUploadRQ cloudUploadRQ) throws IOException;
+
+  Map<String, AssetRS> getByPhotoId(String photoId);
+
+  void uploadToCloud(CloudUploadRQ cloudUploadRQ);
 
   void deleteByPhotoId(String photoId);
 }

@@ -20,9 +20,9 @@ public class CloudinaryServiceImpl implements CloudinaryService {
   @Value("${cloudinary.upload-preset}")
   private String uploadPreset;
 
-  public CloudinaryServiceImpl(@Value("${cloudinary.api-key}") String apiKey,
-      @Value("${cloudinary.api-secret}") String apiSecret,
-      @Value("${cloudinary.cloud-name}") String cloudName) {
+  public CloudinaryServiceImpl(@Value("${cloudinary.key}") String apiKey,
+      @Value("${cloudinary.secret}") String apiSecret,
+      @Value("${cloudinary.cloudname}") String cloudName) {
     this.cloudinary = new Cloudinary(ObjectUtils.asMap(
         "cloud_name", cloudName,
         "api_key", apiKey,
